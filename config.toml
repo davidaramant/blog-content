@@ -7,7 +7,7 @@ paginate = 10
 [params]
 
 	title = "David Aramant"
-	subtitle = "Hi! You somehow found my blog."
+	subtitle = "Hi! You've somehow found my blog!"
 	copyright = ""
 
 	# You can choose between green, orange, red and blue.
