@@ -1,0 +1,38 @@
+baseurl = "https://davidaramant.github.io/"
+languageCode = "en-us"
+title = "David Aramant's Blog"
+theme = "hugo-steam-theme"
+paginate = 10
+
+[params]
+
+	title = "David Aramant"
+	subtitle = "Hi! You somehow found my blog."
+	copyright = ""
+
+	# You can choose between green, orange, red and blue.
+	themeColor = "red"
+	# Enable Google Analytics be inserting your tracking code
+	googleAnalytics = ""
+
+	# To provide some metadata for search engines and the about section in the footer
+	# feel free to add a few information about you and your website.
+	name = "David Aramant"
+	bio = "I work at [SEP](https://www.sep.com)."
+	description = ""
+	location = "" # optional
+	twitter = "davidaramant" # optional
+	github = "davidaramant" # optional
+ 	gitlab = "" # optional
+
+	# Enable a comment system
+	# You can choose between Disqus or Google Plus by setting comments
+	# to disqus or googleplus. For using Disqus you need to enter your
+	# shortname in disqusShortname at the top of the configs. 
+	comments = ""
+
+	# Customize or translate the strings
+	keepReadingStr = "Keep reading"
+	backtotopStr = "Back to top"
+	shareStr = "Share"
+	pageNotFoundTitle = "404 - Page not found"
