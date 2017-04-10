@@ -86,7 +86,7 @@ Here we're looking at a circle of radius 2 around the origin (yes, the value of 
 Let's introduce a function:
 ![z = z*z +c](/buddhabrot/function.svg)
 
-_z_ and _c_ are both complex numbers.  We'll pick any starting point in the gray circle of radius 2 and call it _c_.  Starting with _z_ = 0, the function says that to calculate the next _z_ value, we take the previous one, square it, and add _c_ to it.  In other words, we will generate an infinite series of complex numbers.
+where _z_ and _c_ are both complex numbers.  We'll pick any starting point in the gray circle of radius 2 and call it _c_.  Starting with _z_ = 0, the function says that to calculate the next _z_ value, we take the previous one, square it, and add _c_ to it.  In other words, we will generate an infinite series of complex numbers.
 
 Something interesting happens with those numbers:
 
@@ -173,7 +173,7 @@ Our completely-made-up trajectory starts on the left side and under iteration th
 
 ### Trajectory Visualizations
 
-Let's base the color intensity from how close any of the points in the trajectory come to the origin, and the color hue from the angle of the point from the real axis (X-axis):
+Let's base the color intensity from the distance of the closest point in the trajectory to the origin, and the color hue from the angle of that point from the real axis (X-axis):
 
 ![Trajectory Mandelbrot Visualization](/buddhabrot/trajectory_visualization.png)
 
@@ -196,9 +196,9 @@ The Buddhabrot is defined as:
 Lets unpack that:
 
 * We're going to start with only the points that are _not_ in the Mandelbrot Set; i.e. they escape the circle of radius 2 after some number of iterations.
-* That series of points is called the **trajectory**.
-* We're going to take those trajectories and keep track of where they land.  For each point in a trajectory, we'll figure out the pixel location that it corresponds to and increment that location by 1.
-* The final image is a visualization of how often each pixel location was visited by a trajectory.  In the above image, brighter pixels were visited more often, while the black images were totally skipped.
+* That iterated series of points is called the trajectory of the starting point.
+* We're going to take those trajectories and keep track of which pixels they visit.  For each point in a trajectory, we'll figure out the pixel location that it corresponds to and increment that location by 1.
+* The final image is a visualization of how often each pixel location was visited by a trajectory.  In the above image, brighter pixels were visited more often, while the black areas were totally skipped.
 
 ### Why do we only plot the numbers that are _not_ in the Mandelbrot set?
 
@@ -251,7 +251,7 @@ You can actually utilize the effects of changing the minimum iteration limit to 
 
 This looks pretty 'spacey' because it's similar to how NASA generates false-color images of things like galaxies from radio waves - each color channel is a rendering of the Buddabrot with a different minimum iteration limit.
 
-If you're wondering about those weird boxes everywhere - well, they're actually artifacts from an optimization we'll cover in Part 2.  If I find the motivation I should probably re-render this guy to get rid of those.
+If you're wondering about those weird ghostly boxes everywhere - well, they're actually artifacts from an optimization we'll cover in Part 2.  If I find the motivation I should probably re-render this guy to get rid of those.
 
 ## Effects of the Number of Points
 
