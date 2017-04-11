@@ -1,5 +1,5 @@
 +++
-title = "The Buddhabrot: Rendering a 68 Gigapixel Fractal - Part 4"
+title = "The Buddhabrot Part 4 - Code Optimizations"
 draft = false
 date = "2017-04-11T13:05:10-04:00"
 tags = ["Work related","Buddhabrot"]
