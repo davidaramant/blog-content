@@ -155,13 +155,15 @@ Another form of parallelization that you might not be as familiar with is vector
 
 ![SISD vs SIMD](/buddhabrot/sisd_vs_simd.gif)
 
-Traditionally, CPU instructions are what's known as **single instruction, single data (SISD)** - a particular instructions (like an 'add') would work on one piece of data (ok, it might be two different variables) and produce a single output.  With **single instruction, _multiple_ data (SIMD)** instructions, the data being fed isn't just a single scalar value but a _vector_ of values.  The 'add' instruction can now do multiple additions at the same time.
+Traditionally, CPU instructions are what's known as **single instruction, single data (SISD)** - a particular instructions (like an 'add') would work on one piece of data (ok, it might be two different variables) and produce a single output.  With **single instruction, _multiple_ data (SIMD)** instructions, the data and the output aren't just a single scalar value but a _vector_ of values.  The 'add' instruction can now do multiple additions at the same time.
 
 SIMD support was added to .NET 4.6 with the new RyuJIT compiler.  To use it, you have to target x64-only and include the `System.Numerics.Vectors` NuGet package.  The CPU I ran the following benchmark on supports the [AVX-2](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#Advanced_Vector_Extensions_2) instruction set which means it had 256-bit (32 byte) vectors to work with.  Since a `float` is four bytes, we can cram 8 of them into a single vector for a theoretical speedup of 8x.
 
 ![SISD vs SIMD benchmark](/buddhabrot/sisd_vs_simd_benchmark.png)
 
 I'm not entirely sure this benchmark is entirely accurate (I would guess the real-life speedup is somewhat less dramatic than this) but exploiting SIMD is absolutely a fantastic way speed up the point search.
+
+A final word I have on the subject is that vectorization is _weird_.  I would consider it to be it's own way of programming: there's single-threaded code, multi-threaded code, and vectorized code as its own thing.  Converting code to be vectorized can require a different way of thinking of things that's not exactly intuitive.
 
 ### GPU?
 
@@ -171,22 +173,89 @@ The following is the die layout of a recent-ish Intel CPU (I believe it's the Sk
 
 As you can see, this particular chip has 4 cores... along with a GPU that's the same size as all of them combined!  If you know anything about GPUs you know that Intel's offerings are pretty modest performance-wise, but even so they're willing to devote that much space to it.
 
-GPUs would be super-swell at finding points, but unfortunately the story in .NET isn't great right now.
+GPUs would be super-swell at finding points, but unfortunately the state of GPUs in .NET isn't great right now:
 
-## Plotting the points
+* [CUDAfy.NET](https://cudafy.codeplex.com/) _was_ a popular option (and it supported Intel GPUs!) but it hasn't had a release since April 2017.
+* [Alea GPU](http://www.quantalea.com/) seems like a promising option - it's commercially supported and was even featured on NVidia's blog.  Unfortunately, it's NVidia-only and I don't have one of those cards.
 
-## Generating the Image
+GPUs are something I want to look more into in the future, but I haven't found the time for it yet.
+
+## Phase 3 - Plotting the points
+
+Once we have a bunch of points, we need to plot their trajectories to generate the density map.
+
+When we first did this we just wrote to a bunch of `int` arrays in memory.  Why `int`?  We had no concept of how high the counts could get and .NET also has the `Interlocked` class that could atomically increment an `int`.  This approach was "good enough" for a 500 megapixel version - since an `int` is 4 bytes, that's about 2GB of data.  We actually did run into the dreaded `OutOfMemoryException` if we had too much other stuff running.  Persisting it to disk was also relatively simple.
+
+Clearly, this approach is not remotely scalable to 68.7 gigapixels.  For this approach I changed some things:
+
+* After (gasp!) _examining the data_, I decided that `int` was complete overkill and used `ushort` instead (unsigned 2-bytes).
+* At 2 bytes per pixel location, that's still a 128GB file.  I used a [memory-mapped file](https://en.wikipedia.org/wiki/Memory-mapped_file) to hold this instead of messing around with arrays.  A memory-mapped file allows you to open an arbitrarily huge file and leave it up to the operating system to manage how much of it should be loaded into RAM (it's very similar to virtual memory).  The more RAM the merrier obviously, but this way I didn't have to manually manage anything.
+* Instead of laying out the pixels in the same order as the final image, they were instead broken up into square regions.  This was for two reasons:
+  * Each region was protected independently with a lock.  Multiple threads could still run into a bunch of contention issues, but if they're working on points that are on completely different parts of the main image there shouldn't be any collisions.
+  * Each region is 256 x 256 pixels.  This is important for the next stage.
+
+![Buddhabrot with Grid](/buddhabrot/buddhabrot_with_grid.png)
+
+As example showing the grid concept.  The full size rendering used 1024 x 1024 regions.
+
+## Stage 4 - Generating the Image
+
+Once we have all the trajectories plotted we need some way of turning these numbers into pixels.  Each of the 256 x 256 regions from the last stage will be turned into an independent image.  Spitting out a single image becomes infeasible after a couple of hundred megapixels, so for 68.7 gigapixels we will have to rely on a deep-zoom framework (more on that later).
 
 ### Fit the data!
 
+In our first attempts at generating the Buddhabrot we were essentially going blind - we had no idea what the data looked like, so the exact algorithm to turn a single number (the hit count for a pixel location) into a color was entirely trial-and-error.  If you go down that route, your first attempts will probably resemble the left and right versions in the below image.  Either your image will be incredibly dim or utterly blown out.  How do we get a Goldilocks image like in the middle?
+
+![Buddhabrots with differing dynamic ranges](/buddhabrot/buddhabrot_dynamic_range.jpg)
+
+I eventually came upon the novel concept of examining the data inside the giant trajectory plot.  By doing some simple histograms, it became clear that a vanishing small number of pixels were visited a tremendous number of times (around the origin, for example) while the vast majority of pixels had orders of magnitudes less hits.  This distribution of data is what causes extremely dim images like the above left if you try to linearly map the hit counts to colors - the handful of locations with high hits will be the only bright parts.  If you attempt to correct it too much to bring out the detail in the dim areas, the areas with greater counts will become blown out like in the right image.  To get something better, we have to reduce the highs will bringing up the lows.
+
 ### Tone Mapping
+
+The eventual algorithm I came up with was informed by the histogram of the hit counts to try to balance the distribution of colors based on how many pixels fell into each range.  After the fact, I realized that what I had done more or less fell into the domain of [tone mapping](https://en.wikipedia.org/wiki/Tone_mapping).  Tone mapping is a process of converting high-dynamic data into a more limited range.  Typically it is used for combining multiple photographs with different exposures like the below example:
+
+![Example of tone mapping](/buddhabrot/tone_mapping_example.png)
+
+Using the parlance of tone mapping, what I had come up with was a _global operator_ - every single pixel in the image was independently calculated.  There is another class of tone mapping algorithms called _local operators_ that also take into account the _surrounding_ data.
+
+I think my results are OK but there are still some areas that don't show a lot of detail.  Playing around with some existing tone mapping algorithms (especially the local operator varieties) would be an interesting experiment.
 
 ### RBG vs HSV
 
+One recommendation I have is that anytime you're doing actual computations with colors, _do not use RGB_.
+
+![RBG colors](/buddhabrot/rgb.png)
+
+Representing colors with red-blue-green components is simple to understand and fast for computers, but computing gradients with them gives pretty miserable results.  Instead, something like hue-saturation-value is a much, much better alternative.
+
+![HSV colors](/buddhabrot/hsv.jpg)
+
+Linearly interpolating between two colors represented as HSV will give _much_ more pleasing results than doing the same with RGB.
+
 ### The Tyranny of Color Theory
 
-### Generating the Tiles
+Picking the colors you want is ultimately subjective, but you might run into problems with color perception.
+
+![Color gradients](/buddhabrot/color_gradients.png)
+
+The problem is that human eyes are not equally sensitive to the entire color spectrum.  Some colors will simply look brighter than others even though they are "mathematically" equal.  This can be pretty frustrating if you're trying to put together a palette that maximizes the use of color in order to show more detail.  I experimented a lot with different palettes for my output before landing on the fairly conservative one in the bottom right corner.
+
+### Beware of `System.Drawing.Bitmap.SetPixel`
+
+The standard bitmap class in .NET only has one obvious way of setting colors: `SetPixel`.  Unfortunately, `SetPixel` is _brutally_ slow.  The better way to do things is to use `LockBits`/`UnlockBits` to directly manipulate the pixel buffer inside of the image.  I'm not sure why they haven't added a nicer convenience method to allow you to set all the colors at once, but it is very much worth your while to do things the hard way:
+
+![Bitmap benchmark](/buddhabrot/bitmap_benchmark.png)
+
+Remember that we're generating 1,048,576 tiles (1024 x 1024) so the time savings from this change is nearly 5.6 hours!
 
 ### Generating the Zoom Levels
 
+The tile images that we generate represent the most zoomed-in version of the Buddhabrot.  To create the other zoom levels, I used [ImageMagick](http://www.imagemagick.org/script/index.php) to "glue" tiles together.
+
+![Zoom levels](/buddhabrot/zoom_levels.png)
+
+For each zoom level, four tiles are combined to a single tile.  This process is repeated until eventually t
+
 ## Summary and Future Work
+
+[Buddhabrot](https://www.sep.com/labs/buddhabrot)
