@@ -1,9 +1,10 @@
-+++
-title = "The Buddhabrot Part 4 - Code Optimizations"
-draft = false
-date = "2017-04-11T13:05:10-04:00"
-tags = ["Work related","Buddhabrot"]
-+++
+---
+title: "The Buddhabrot Part 4: Code Optimizations"
+draft: false
+date: 2017-04-11
+tags: ["Work related","Buddhabrot"]
+description: "Code optimizations and final thoughts"
+---
 
 ![Ryan Gosling meme](/buddhabrot/gosling_meme.jpg)
 

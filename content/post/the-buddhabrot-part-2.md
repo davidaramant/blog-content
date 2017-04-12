@@ -1,9 +1,10 @@
-+++
-title = "The Buddhabrot Part 2 - What is the Buddhabrot?"
-draft = false
-date = "2017-04-07T13:05:10-04:00"
-tags = ["Work related","Buddhabrot"]
-+++
+---
+title: "The Buddhabrot Part 2: What is the Buddhabrot?"
+draft: false
+date: 2017-04-07
+tags: ["Work related","Buddhabrot"]
+description: "Lets find out what exactly the Buddhabrot is"
+---
 
 In the [last part](/post/the-buddhabrot-part-2) we learned what the Mandelbrot set is.
 

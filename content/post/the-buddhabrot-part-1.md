@@ -1,9 +1,10 @@
-+++
-title = "The Buddhabrot Part 1: What is the Mandelbrot set?"
-draft = false
-date = "2017-04-06T13:05:10-04:00"
-tags = ["Work related","Buddhabrot"]
-+++
+---
+title: "The Buddhabrot Part 1: What is the Mandelbrot set?"
+draft: false
+date: 2017-04-06
+tags: ["Work related","Buddhabrot"]
+description: "I recently gave a talk about rendering a 68.7 gigapixel version of the Buddhabrot.  Lets explore what that means"
+---
 
 At the inaugural [Indy.Code()](https://indycode.amegala.com/) conference I presented on how I generated a 68.7 gigapixel rendering of the Buddhabrot fractal.  For now, all you need to know that it's a really, really big crazy-looking picture.  This series is based on that talk.
 

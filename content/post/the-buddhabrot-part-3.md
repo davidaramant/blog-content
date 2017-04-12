@@ -1,9 +1,10 @@
-+++
-title = "The Buddhabrot Part 3 - Algorithmic Optimizations"
-draft = false
-date = "2017-04-10T13:05:10-04:00"
-tags = ["Work related","Buddhabrot"]
-+++
+---
+title: "The Buddhabrot Part 3: Algorithmic Optimizations"
+draft: false
+date: 2017-04-10
+tags: ["Work related","Buddhabrot"]
+description: "Creating the Buddhabrot takes a lot of work.  Lets reduce it as much as possible"
+---
 
 In the [last part](/post/the-buddhabrot-part-2) we learned what the Buddhabrot is and why it's pretty slow to generate.  As a recap, my version of it uses the following values:
 
