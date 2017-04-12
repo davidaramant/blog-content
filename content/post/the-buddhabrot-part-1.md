@@ -9,25 +9,23 @@ At the inaugural [Indy.Code()](https://indycode.amegala.com/) conference I prese
 
 ## Introduction
 
-I was introduced to the Buddhabrot in a college class I took senior year about fractals (actually, it was about *Chaotic Dynamical Systems* but I don't remember too much about that!).  The Buddhabrot stuck with me and I tinkered with it a little bit further after graduating.
+I was introduced to the Buddhabrot in a college class I took about fractals (technically, it was about *Chaotic Dynamical Systems* but I don't remember too much about that..).  A few years ago at [SEP](https://www.sep.com) we introduced [Hackathon Weekends](https://www.sep.com/labs/hackathon/).  The Buddhabrot seemed like the perfect topic for a weekend project so we (I managed to convince two others to help) set out to render a 500 megapixel version.  This was heavily inspired by [Johann Korndoerfer's 500 megapixel version](http://erleuchtet.org/2010/07/ridiculously-large-buddhabrot.html) he made in LISP.  I decided to use C#/.NET because that's what I'm most comfortable with.
 
-A few years ago at [SEP](https://www.sep.com) we introduced [Hackathon Weekends](https://www.sep.com/labs/hackathon/).  The Buddhabrot seemed like the perfect topic for a weekend project so we (I managed to convince two others to help) set out to render a 500 megapixel version.  This was heavily inspired by [Johann Korndoerfer's 500 megapixel version](http://erleuchtet.org/2010/07/ridiculously-large-buddhabrot.html) he made in LISP.  I decided to use C#/.NET because that's what I'm most comfortable with.
-
-We succeeded!  Although impressive, I was a bit unsatisfied with all the shortcuts we had to take to accomplish anything in a weekend. I decided to revisit it in a second Hackathon and raised it to 625 megapixels.  That might seem like a modest increase, but the 500 megapixels actually used to be a very hard limit with how we were doing things.  *(As it turns out, the .NET Image class will throw an undocumented Win32 exception if you try to create an image larger than 500MP.  Geez, don't they test anything over there at Microsoft!!!)*
+We succeeded!  Although impressive, I was a bit unsatisfied with all the shortcuts we had to take to accomplish anything in a weekend. I decided to revisit it in a second Hackathon and raised it to 625 megapixels.  That might seem like a modest increase, but the 500 megapixels was a hard limit with the original method.  *(As it turns out, the .NET Image class will throw an undocumented Win32 exception if you try to create an image larger than 500MP.  Geez, don't they test anything over there at Microsoft!!!)*
 
 ![History of progress](/buddhabrot/history_of_progress.png)
 
-At this point I was hooked so I pushed it up to 10 gigapixels.  I immediately realized my mistake and corrected it by further pushing it to the largest possible version I could create without radically altering my approach - 68.7 gigapixels!
+At this point I was hooked so I pushed it up to 10 gigapixels.  I immediately realized my mistake and pushed it to the largest possible version I could create without radically altering my approach - 68.7 gigapixels!
 
 #### Aside - 68.7 gigapixels?  What a weird number
 
-Now, the number 68.7 might jump out at you because it doesn't sound very computer-sciencey.  How you refer to the size depends on whether you consider a gigapixel to be 1,000 or 1,024 pixels - if you go by 1,024, the size is actually 64 gigapixels.  However, since the only people who actually *care* about megapixels are camera manufacturers (and they cheat as much as they can get away with) I'll go for the more impressive number.
+Now, the number 68.7 might jump out at you because it doesn't sound very computer-sciencey.  How you refer to the size depends on whether you consider a gigapixel to be 1,000 or 1,024 pixels.  If you go by 1,024, the size is actually 64 gigapixels.  Since the only people who actually *care* about megapixels are camera manufacturers (and they cheat as much as they can get away with) I'll go for the more impressive number.
 
 In unambiguous terms, the final rendering is 68,719,476,736 pixels (262,144 by 262,144).
 
 ## What is a Fractal?
 
-A **fractal** is defined by *self similarity* - that parts of the object are similar to the whole.
+A [fractal](https://en.wikipedia.org/wiki/Fractal) is defined by *self similarity* - parts of the object are similar to the whole.
 
 A classic example of a fractal that you may have seen is the **Sierpinski Triangle**:
 ![Sierpinski Triangle](/buddhabrot/Sierpinski_triangle.png)
@@ -41,11 +39,11 @@ Fractals *do* have real-world applications, but the one we'll be looking at in t
 
 ## What is the Mandelbrot Set?
 
-We'll have to cover a bit of math to explain this, but don't worry, there won't be any crazy theoretical stuff involved.
+We'll have to cover a bit of math to explain this, but don't worry, there won't be any scary theoretical stuff covered.
 
 ### Complex Numbers
 
-The most complicated mathematical concept we have to introduce is [**complex numbers**](https://en.wikipedia.org/wiki/Complex_number).  A complex number is written as **a + b_i_** where **a** is a real number and **b** is an imaginary number (remember that _i_ is the square root of negative one).
+The most complicated mathematical concept we have to introduce is [complex numbers](https://en.wikipedia.org/wiki/Complex_number).  A complex number is written as **a + b_i_** where **a** is a real number and **b** is an imaginary number (remember that _i_ is the square root of negative one).
 
 Just like "normal" numbers, you can add and multiply complex numbers.  These rules are very straightforward, but you can look those up yourself if you are interested. The important thing to keep in mind is that a complex number has two independent components and that addition/multiplication isn't quite the same as a normal number.
 
@@ -61,14 +59,14 @@ Here we're looking at a circle of radius 2 around the origin (yes, the value of 
 
 Let's introduce a function:
 
-![z = z*z +c](/buddhabrot/function.svg)
+![z = z*z +c](/buddhabrot/mandelbrot_set_equation.gif)
 
-where _z_ and _c_ are both complex numbers.  We'll pick any starting point in the gray circle of radius 2 and call it _c_.  Starting with _z_ = 0, the function says that to calculate the next _z_ value, we take the previous one, square it, and add _c_ to it.  In other words, we will generate an infinite series of complex numbers.
+where _z_ and _c_ are both complex numbers.  We'll pick any starting point in the gray circle of radius 2 and call it _c_.  Starting with _z_ = 0, the function says that to calculate the next _z_ value, we take the previous one, square it, and add _c_ to it.  This generates an infinite series of complex numbers.
 
 Something interesting happens with those numbers:
 
-* For some _c_ values, the numbers we generate will eventually escape the circle of radius 2 and go flying off to infinity, never to return.
-* For others, they will never leave the circle of radius two _even under infinite iteration_.
+* For some starting _c_ values, the numbers we generate will eventually escape the circle of radius 2 and go flying off to infinity, never to return.
+* For others, they will _never_ leave the circle of radius 2 _even under infinite iteration_.
 
 That last part is pretty weird!  What do the the starting points look like that will never escape?
 
@@ -112,4 +110,4 @@ Not too complicated.  The only thing to keep in mind is that multiplication and 
 
 ## Summary
 
-So far we've been introduced to the Mandelbrot Set.  Next time we'll start looking into how to visualize it, which will eventually bring us to the Buddhabrot.
+So far we've been introduced to the Mandelbrot Set.  In the [next part](/post/the-buddhabrot-part-2) we'll start looking into how to visualize it, which will eventually bring us to the Buddhabrot.
