@@ -68,6 +68,10 @@ Despite my best efforts, there are some areas that just don't show a lot of deta
 
 I'm not sure there really _is_ more detail to show around this area, but it still feels a bit unsatisfying...
 
+## The Code
+
+All the code for this [can be found on GitHub](https://github.com/davidaramant/Fractals) if you're curious.  I feel like I need a disclaimer here, however...  At some point I got pretty sloppy with it (tons of hardcoded things, etc) because the code is really just a means to an end, not the end result.  After coming back to it a year later I definitely I felt the pain from that because I couldn't find anything.  Just the perils of a mostly solo hobby project, I guess.
+
 ## What's Next?
 
 Am I done with the Buddhabrot?  A year ago, I would have said "probably."  However, preparing for the talk got me thinking about it again, and there's still some areas that could be improved...
