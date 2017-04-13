@@ -16,7 +16,7 @@ Thanks to [SEP](https://www.sep.com) for being willing to host it.
 
 ## Guided Tour
 
-Lets examine some features to back up some of the claims I've made throughout the series.
+Let's examine some features to back up some of the claims I've made throughout the series.
 
 ### The effects of high iteration limits
 

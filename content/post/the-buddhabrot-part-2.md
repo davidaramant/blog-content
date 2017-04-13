@@ -3,7 +3,7 @@ title: "The Buddhabrot Part 2: What is the Buddhabrot?"
 draft: false
 date: 2017-04-07
 tags: ["Work related","Buddhabrot"]
-description: "Lets find out what exactly the Buddhabrot is"
+description: "Let's find out what exactly the Buddhabrot is"
 ---
 
 In the [last part](/post/the-buddhabrot-part-2) we learned what the Mandelbrot set is.
@@ -66,7 +66,7 @@ First of all you'll notice that the Buddhabrot is always displayed rotated 90 de
 
 The Buddhabrot is _a density plot of trajectories from points that are not in the Mandelbrot set_.
 
-Lets unpack that:
+Let's unpack that:
 
 * We're going to start with only the points that are _not_ in the Mandelbrot set; i.e. they escape the circle of radius 2 after some number of iterations.
 * That iterated series of points is called the trajectory of the starting point.

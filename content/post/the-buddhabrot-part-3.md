@@ -3,7 +3,7 @@ title: "The Buddhabrot Part 3: Algorithmic Optimizations"
 draft: false
 date: 2017-04-10
 tags: ["Work related","Buddhabrot"]
-description: "Creating the Buddhabrot takes a lot of work.  Lets reduce it as much as possible"
+description: "Creating the Buddhabrot takes a lot of work.  Let's reduce it as much as possible"
 ---
 
 In the [last part](/post/the-buddhabrot-part-2) we learned what the Buddhabrot is and why it's pretty slow to generate.  As a recap, my version of it uses the following values:
@@ -42,7 +42,7 @@ How do you find the equations for those areas?  Well, uh, you search the interne
 
 OK, so far, so good - that eliminates a bunch of points we _don't_ want.  Where are the points we _do_ want?
 
-Lets take another look at the visualization of the escape times:
+Let's take another look at the visualization of the escape times:
 
 ![Escape Time visualized in Black and White](/buddhabrot/escape_time_bw.png)
 
@@ -77,11 +77,11 @@ To catch points like that we can use a cycle detection algorithm like [Brent's a
 
 This algorithm felt a bit weird to me when I first saw it because it's directly comparing floating-point numbers, which is probably the biggest thing you're never supposed to do with floating-point numbers.  Well, this is one of the rare exceptions to the rule.  If the _z_ value is ever the exact same binary value as a previous _z_ it will naturally become an infinite loop since the algorithm is deterministic - the same input will always generate the same output.
 
-When I implemented this I had no concept of how much or little it improved the speed.  Lets come back to it later to see if we can answer that...
+When I implemented this I had no concept of how much or little it improved the speed.  Let's come back to it later to see if we can answer that...
 
 ### What optimization _aren't_ we doing?
 
-Lets take a look at a plain rendering of the set again:
+Let's take a look at a plain rendering of the set again:
 
 ![Crisp B/W Mandelbrot](/buddhabrot/crisp_mandelbrot.png)
 

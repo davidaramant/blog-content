@@ -3,12 +3,12 @@ title: "The Buddhabrot Part 4: Code Optimizations"
 draft: false
 date: 2017-04-11
 tags: ["Work related","Buddhabrot"]
-description: "Now that we've cut down on the work we have to do, lets optimize what's left as much as possible"
+description: "Now that we've cut down on the work we have to do, let's optimize what's left as much as possible"
 ---
 
 ![Ryan Gosling meme](/buddhabrot/gosling_meme.jpg)
 
-OK - we've [drastically reduced the amount of work we have to do](/post/the-buddhabrot-part-3), so now lets try to optimize what's left as much as possible.
+OK - we've [drastically reduced the amount of work we have to do](/post/the-buddhabrot-part-3), so now let's try to optimize what's left as much as possible.
 
 #### A note on benchmarks...
 
