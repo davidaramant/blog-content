@@ -22,7 +22,7 @@ One thing we can visualize is the **escape time** - how many iterations it took 
 
 ![Escape Time visualized in Black and White](/buddhabrot/escape_time_bw.png)
 
-Here I'm just visualizing odd escape times in black and even ones in white.  You can see that a fair chunk of the circle only takes one iteration before it fails the check, a tighter oval takes two, etc.  As we get closer to the border of the Mandelbrot set, it takes longer and longer for the point to break out of the loop.
+Here I'm just visualizing odd escape times in black and even ones in white (the set itself is drawn in white to match the previous picture).  You can see that a fair chunk of the circle only takes one iteration before it fails the check, a tighter oval takes two, etc.  As we get closer to the border of the Mandelbrot set, it takes longer and longer for the point to break out of the loop.
 
 This is certainly more interesting, but it _still_ doesn't look much like how you normally see it.
 
@@ -32,7 +32,7 @@ This is certainly more interesting, but it _still_ doesn't look much like how yo
 
 This is more like it!  Here I've taken the exact same data we saw on the previous image and mapped it to a simple color ramp instead.
 
-Although this is a very simplistic version, visualizing the escape time is one of the most common ways you see the Mandelbrot set (or, more accurately, the points _around_ the Mandelbrot set).  For whatever reason, it seems to be extremely popular to visualize the poor thing using a 60s tie-dye or 70s van-art aesthetic (don't ask me).  I'm sure you can already think of ways to make the above image more visually impressive by zooming in more, picking different colors, smoothing out the color gradients, etc...
+Although this is a very simplistic version, visualizing the escape time is one of the most common ways you see the Mandelbrot set (or, more accurately, the points _around_ the Mandelbrot set).  For whatever reason, it seems to be extremely popular to visualize the poor thing using a 60s tie-dye or 70s van art aesthetic (don't ask me).  I'm sure you can already think of ways to make the above image more visually impressive by zooming in more, picking different colors, smoothing out the color gradients, etc...
 
 ### Is there any other data we can visualize?
 
@@ -70,7 +70,7 @@ Lets unpack that:
 
 * We're going to start with only the points that are _not_ in the Mandelbrot set; i.e. they escape the circle of radius 2 after some number of iterations.
 * That iterated series of points is called the trajectory of the starting point.
-* We're going to take those trajectories and keep capture which pixels they visit.  For each point in a trajectory, we'll figure out the pixel location that it corresponds to and increment that location by 1.
+* We're going to take those trajectories and keep track of which pixels they visit.  For each point in a trajectory, we'll figure out the pixel location that it corresponds to and increment that location by 1.
 * The final image is a visualization of how often each pixel location was visited by a trajectory.  In the above image, brighter pixels were visited more often, while the black areas were totally skipped.
 
 ### Why do we only plot the numbers that are _not_ in the Mandelbrot set?
@@ -124,7 +124,7 @@ You can actually utilize the effects of changing the minimum iteration limit to 
 
 This looks pretty 'spacey' because it's similar to how NASA generates false-color images of things like galaxies from radio waves - each color channel is a rendering of the Buddabrot with a different minimum iteration limit.
 
-If you're wondering about those weird ghostly boxes everywhere - well, they're actually artifacts from an optimization we'll cover in Part 2.  If I find the motivation I should probably re-render this guy to get rid of those.
+If you're wondering about those weird ghostly boxes everywhere - well, they're actually artifacts from an optimization we'll cover in a later part.  If I find the motivation I should probably re-render this guy to get rid of those.
 
 ## Effects of the Number of Points
 
@@ -142,7 +142,7 @@ Let's wrap up this part by summarizing what we've learned so far:
 * The Buddhabrot needs a lot of points to not look noisy
 * Unlike the normal Mandelbrot visualization, there is not a 1:1 mapping between points and pixels
 
-A normal Mandelbrot visualization can be done in real-time (or close to it).  There are lots of fractal viewer programs you can download to play around with it.  One popular thing to do is to zoom in at incredible magnifications.  The Mandelbrot set has infinite detail, so you will always find something down there.  This is feasible because every pixel in the output corresponds to one complex number.  Making a rendering at 1x or 100,000,000x magnification is the same effort (minus any overhead from using an arbitrary-precision data type) - it's the same number of pixels, so it's the same number of complex numbers to iterate.
+A normal Mandelbrot visualization can be done in real-time (or close to it).  There are lots of fractal viewer programs you can download to play around with it.  One popular thing to do is to zoom in at incredible magnifications.  This is feasible because every pixel in the output corresponds to one complex number.  Making a rendering at 1x or 100,000,000x magnification is the same effort (minus any overhead from using an arbitrary-precision data type) - it's the same number of pixels, so it's the same number of complex numbers to iterate.
 
 Not so for the Buddhabrot.  Because we don't know which starting points will contribute to a particular pixel location, zooming in real-time is not feasible.  You _can_ estimate which points you should iterate to get an image using technique like the Metropolis-Hastings algorithm, but that's pretty advanced.  It's actually much conceptually simpler to pre-render a gigantic version of it and zoom in after-the-fact.
 

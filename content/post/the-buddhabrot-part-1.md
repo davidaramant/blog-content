@@ -6,7 +6,13 @@ tags: ["Work related","Buddhabrot"]
 description: "I recently gave a talk about rendering a 68.7 gigapixel version of the Buddhabrot.  Lets explore what that means"
 ---
 
-At the inaugural [Indy.Code()](https://indycode.amegala.com/) conference I presented on how I generated a 68.7 gigapixel rendering of the Buddhabrot fractal.  For now, all you need to know that it's a really, really big crazy-looking picture.  This series is based on that talk.
+At the inaugural [Indy.Code()](https://indycode.amegala.com/) conference I presented on how I generated a 68.7 gigapixel rendering of the Buddhabrot fractal.  For now, all you need to know that it's this thing...
+
+![A small Buddhabrot](/buddhabrot/normal.jpg)
+
+...but really, really gigantic.
+
+In this series I'll explain what the Buddhabrot is and how I made my version.
 
 ## Introduction
 
@@ -20,7 +26,7 @@ At this point I was hooked so I pushed it up to 10 gigapixels.  I immediately re
 
 #### Aside - 68.7 gigapixels?  What a weird number
 
-Now, the number 68.7 might jump out at you because it doesn't sound very computer-sciencey.  How you refer to the size depends on whether you consider a gigapixel to be 1,000 or 1,024 pixels.  If you go by 1,024, the size is actually 64 gigapixels.  Since the only people who actually *care* about megapixels are camera manufacturers (and they cheat as much as they can get away with) I'll go for the more impressive number.
+Now, the number 68.7 might jump out at you because it doesn't sound very computer-sciencey.  How you refer to the size depends on whether you consider a kilopixel to be 1,000 or 1,024 pixels.  If you go by 1,024, the size is actually 64 gigapixels.  Since the only people who actually *care* about megapixels are camera manufacturers (and they cheat as much as they can get away with) I'll go for the more impressive number.
 
 In unambiguous terms, the final rendering is 68,719,476,736 pixels (262,144 by 262,144).
 
@@ -40,7 +46,7 @@ Fractals *do* have real-world applications, but the one we'll be looking at in t
 
 ## What is the Mandelbrot Set?
 
-We'll have to cover a bit of math to explain this, but don't worry, there won't be any scary theoretical stuff covered.
+The Mandelbrot set has been called "the king of fractals."  We'll have to use a bit of math to explain what it is, but don't worry, there won't be any scary theoretical stuff.
 
 ### Complex Numbers
 
@@ -50,7 +56,7 @@ Just like "normal" numbers, you can add and multiply complex numbers.  These rul
 
 ### The Complex Plane
 
-Since a complex number has two different parts, we can draw this in two dimensions.  Mathematicians call this the **complex plane**:
+Since complex numbers have two different parts we can draw them in two dimensions.  Mathematicians call this the **complex plane**:
 
 ![Complex Plane](/buddhabrot/complex_plane.png)
 
@@ -67,13 +73,13 @@ where _z_ and _c_ are both complex numbers.  We'll pick any starting point in th
 Something interesting happens with those numbers:
 
 * For some starting _c_ values, the numbers we generate will eventually escape the circle of radius 2 and go flying off to infinity, never to return.
-* For others, they will _never_ leave the circle of radius 2 _even under infinite iteration_.
+* For other _c_ values, the series of points will _never_ leave the circle of radius 2 _even under infinite iteration_.
 
 That last part is pretty weird!  What do the the starting points look like that will never escape?
 
 ![Mandelbrot Set](/buddhabrot/complex_plane_mandelbrot.png)
 
-We've just found the [Mandelbrot Set](https://en.wikipedia.org/wiki/Mandelbrot_set).
+We've just found the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set).
 
 ### Hold on, "infinite iteration?"
 

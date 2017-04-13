@@ -3,7 +3,7 @@ title: "The Buddhabrot Part 4: Code Optimizations"
 draft: false
 date: 2017-04-11
 tags: ["Work related","Buddhabrot"]
-description: "Code optimizations and final thoughts"
+description: "Now that we've cut down on the work we have to do, lets optimize what's left as much as possible"
 ---
 
 ![Ryan Gosling meme](/buddhabrot/gosling_meme.jpg)
@@ -26,7 +26,7 @@ Even with tools like this, it can be pretty challenging coming up with realistic
 
 ### Is Brent's Algorithm worth it?
 
-Remember this thing?  Let's actually measure the impact of using a cycle detection algorithm:
+Remember this thing?  Let's actually measure the impact of using a cycle detection algorithm when finding Buddhabrot points:
 
 ![Brent's Algorithm Benchmark](/buddhabrot/brents_algorithm_benchmark.png)
 
@@ -44,7 +44,7 @@ Unless you're only making a teeny-tiny image, rendering a Buddhabrot is _not_ so
 
 * **Find border regions** - This doesn't take too long, but it's something we only have to do once.
 * **Find points** - This is _only_ finding points that match our iteration limit criteria.  The output will be a bunch of complex numbers.
-* **Plot trajectories** - Run through the points to find how many times each pixel location was visited.  This stage will give us something of the same dimensions as the final image, but it's just numbers at this point.
+* **Plot trajectories** - Run through the points we found in the last step to find how many times each pixel location was visited.  This stage will give us something of the same dimensions as the final image, but it's just numbers at this point.
 * **Render image** - Turn the raw numbers from the last stage into pretty pixels.
 
 By breaking it up like this we can save our progress and easily add on to it.  If we make a complete image and decide that we really need some more points, well, just find some more - the trajectory map from stage 3 can be added on to without recreating it from scratch.  The last stage is likely the one that will be run the most number of times, since creating an aesthetically pleasing image is pretty subjective and there's a lot of trial and error.
@@ -65,7 +65,7 @@ Finding points that meet our criteria is _by far_ the slowest part of the proces
 
 ### Thread-level parallelism
 
-In .NET the easiest way to exploit parallelism is [Task Parallel Library](https://en.wikipedia.org/wiki/Parallel_Extensions#Task_Parallel_Library), specifically the `Parallel.Foreach` construct.  .NET will take care of distributing the work to different worker threads and managing that for you.
+In .NET the easiest way for us to exploit parallelism is the [Task Parallel Library](https://en.wikipedia.org/wiki/Parallel_Extensions#Task_Parallel_Library), specifically the `Parallel.Foreach` construct.  .NET will take care of distributing the work to different worker threads and managing that for you.
 
 Honestly, I don't have much to say about this - Ballmer-Jobs' quote below sums it up.  TPL is perfectly suited for this task.
 
@@ -93,14 +93,14 @@ The following is the die layout of a recent Intel CPU (I believe it's the Skylak
 
 ![CPU die layout](/buddhabrot/cpu_layout.jpg)
 
-As you can see, this particular chip has 4 cores... along with a GPU that's the same size as all of them combined!  If you know anything about GPUs you know that Intel's offerings are pretty modest as GPUs go, but even so they're willing to devote that much expensive die space to it.
+As you can see, this particular chip has 4 cores... along with a GPU that's the same size as all of them combined!  If you know anything about GPUs you know that Intel's offerings are pretty modest as far as GPUs go, but even so they're willing to devote that much expensive die space to it.
 
 GPUs would be super-swell at finding points (churning through highly parallel data is their forté), but unfortunately the state of using GPUs in .NET isn't great right now:
 
 * [CUDAfy.NET](https://cudafy.codeplex.com/) _was_ a popular option (and it supported Intel GPUs) but it hasn't had a release since April 2015.  There seems to be about a dozen similar abandoned open-source projects.
 * [Alea GPU](http://www.quantalea.com/) seems like a promising option.  It's commercially supported and was even featured on NVidia's blog.  Unfortunately, it's NVidia-only and I don't have one of those cards.
 
-GPUs computing is something that I want explore, but I just haven't found the time for it yet.
+GPUs computing is something that I want explore but I just haven't found the time for it yet.
 
 ## Stage 3 - Plotting the points
 
@@ -166,7 +166,7 @@ Picking the colors you want is ultimately subjective, but you might run into iss
 
 ### Generating the Tiles / Zoom Levels
 
-I used a framework called [Leaflet](http://leafletjs.com/) to display the final result images.  Each of the 256 x 256 regions from the trajectory map was converted to a tile image.  Those tiles represent the deepest zoom level of the Buddhabrot.  Map frameworks like Leaflet load different sets of images for the different zoom levels - 4 tiles would be represented by 1 when zoomed out a single level.
+I used a framework called [Leaflet](http://leafletjs.com/) to display the final result images.  Each of the 256 x 256 regions from the trajectory map was converted to a tile image.  Those tiles represent the deepest zoom level of the Buddhabrot.  Map frameworks like Leaflet load different sets of images for the different zoom levels - 4 tiles would be represented by 1 when zoomed out a level.
 
 ![Zoom levels](/buddhabrot/zoom_levels.png)
 
@@ -182,6 +182,13 @@ The standard bitmap class in .NET only has one obvious way of setting colors: `S
 
 Remember that we're generating 1,048,576 tiles (1024 x 1024) so the time savings from this change is nearly 5.6 hours!
 
-## Summary and Future Work
+## Summary
 
-[Buddhabrot](https://www.sep.com/labs/buddhabrot)
+So far we've learned:
+
+* What the Mandelbrot set is
+* What the Buddhabrot is
+* How to reduce the amount of work involved through algorithmic optimizations
+* How to speed up / implement the remaining work
+
+[Next time](/post/the-buddhabrot-part-5) I'll finally show off the big guy!
