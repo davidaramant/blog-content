@@ -16,7 +16,7 @@ In the [last part](/post/the-buddhabrot-part-2) we learned what the Buddhabrot i
 
 > The real problem is that programmers have spent far too much time worrying about efficiency in the wrong places and at the wrong times; **premature optimization is the root of all evil** (or at least most of it) in programming.
 > 
-> Donald Knuth
+> [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)
 
 Before we start throwing code at the problem we're going to have to put on our thinking caps and try to figure out some ways to reduce the amount of work we're doing.
 
