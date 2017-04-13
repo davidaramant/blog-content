@@ -83,7 +83,7 @@ We've just found the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_s
 
 ### Hold on, "infinite iteration?"
 
-I used a bad word in that definition - computers don't like the concept of _infinity_ very much.  I mean, they're happy enough to do something forever, but us impatient humans aren't very happy waiting around that long.
+I used a bad word in that definition - computers don't like the concept of _infinity_ very much.  I mean, they're happy enough to do something forever, but we impatient humans aren't very happy waiting around that long.
 
 So, like the lazy programmers we are, we'll pick a value for "infinity" and leave the theoretical perfection to the mathematicians.  As it turns out, the value we pick changes the output considerably:
 
