@@ -134,7 +134,7 @@ You can actually utilize the effects of changing the minimum iteration limit to 
 
 This looks pretty 'spacey' because it's similar to how NASA generates false-color images of things like galaxies from radio waves - each color channel is a rendering of the Buddabrot with a different minimum iteration limit.
 
-If you're wondering about those weird ghostly boxes everywhere - well, they're actually artifacts from an optimization we'll cover in a later part.  If I find the motivation I should probably re-render this guy to get rid of those, but for a much more impressive version, check out the one by [Scott Seligman](http://nebula.scottandmichelle.net/nebula/index.html) (I don't think I can link to the Nebulabrot version directly, but click the "Normal" option in the top left).
+If you're wondering about those weird ghostly boxes everywhere - well, they're actually artifacts from an optimization we'll cover in a later part.  If I find the motivation I should probably re-render this guy to get rid of those, but for a much more impressive version, check out the one by [Scott Seligman](http://nebula.scottandmichelle.net/nebula/index.html#tricolor).
 
 ## Effects of the Number of Points
 
