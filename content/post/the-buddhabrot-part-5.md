@@ -8,6 +8,14 @@ description: "Finally, the 68.7 gigapixel Buddhabrot is unveiled!  I also have s
 
 I think it's high time the big version is shown off...
 
+## Series Overview
+
+* [Part 1 - What is the Mandelbrot set?](/post/the-buddhabrot-part-1)
+* [Part 2 - What is the Buddhabrot?](/post/the-buddhabrot-part-2)
+* [Part 3 - Algorithmic Optimizations](/post/the-buddhabrot-part-3)
+* [Part 4 - Code Optimizations](/post/the-buddhabrot-part-4)
+* Part 5 - The Big Reveal
+
 ## The 68.7 Gigapixel Buddhabrot
 
 [Tada!](https://www.sep.com/labs/buddhabrot)  You can pan around and use the mouse wheel to zoom in/out.  It should work fine on mobile too.

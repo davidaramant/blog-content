@@ -14,6 +14,14 @@ At the inaugural [Indy.Code()](https://indycode.amegala.com/) conference I prese
 
 In this series I'll explain what the Buddhabrot is and how I made my version.
 
+## Series Overview
+
+* Part 1 - What is the Mandelbrot set?
+* [Part 2 - What is the Buddhabrot?](/post/the-buddhabrot-part-2)
+* [Part 3 - Algorithmic Optimizations](/post/the-buddhabrot-part-3)
+* [Part 4 - Code Optimizations](/post/the-buddhabrot-part-4)
+* [Part 5 - The Big Reveal](/post/the-buddhabrot-part-5)
+
 ## Introduction
 
 I was introduced to the Buddhabrot in a college class about fractals (technically, it was about *Chaotic Dynamical Systems* but I don't remember too much about that).  A few years ago at [SEP](https://www.sep.com) we introduced [Hackathon Weekends](https://www.sep.com/labs/hackathon/).  The Buddhabrot seemed like the perfect topic for a weekend project so we (I managed to convince two others to help) set out to render a 500 megapixel version.  This was heavily inspired by [Johann Korndoerfer's 500 megapixel version](http://erleuchtet.org/2010/07/ridiculously-large-buddhabrot.html) he made in LISP.  I decided to use C#/.NET because that's what I'm most comfortable with.
@@ -24,7 +32,7 @@ We succeeded!  Although impressive, I was a bit unsatisfied with all the shortcu
 
 At this point I was hooked so I pushed it up to 10 gigapixels.  I immediately realized my mistake and pushed it to the largest possible version I could create without radically altering my approach - 68.7 gigapixels!
 
-#### Aside - 68.7 gigapixels?  What a weird number
+### Aside - 68.7 gigapixels?  What a weird number
 
 Now, the number 68.7 might jump out at you because it doesn't sound very computer-sciencey.  How you refer to the size depends on whether you consider a kilopixel to be 1,000 or 1,024 pixels.  If you go by 1,024, the size is actually 64 gigapixels.  Since the only people who actually *care* about megapixels are camera manufacturers (and they cheat as much as they can get away with) I'll go for the more impressive number.
 

@@ -12,6 +12,14 @@ In the [last part](/post/the-buddhabrot-part-2) we learned what the Buddhabrot i
 * Maximum iteration limit: 5,000,000
 * Size: 68,719,476,736 pixels (262,144 x 262,144)
 
+## Series Overview
+
+* [Part 1 - What is the Mandelbrot set?](/post/the-buddhabrot-part-1)
+* [Part 2 - What is the Buddhabrot?](/post/the-buddhabrot-part-2)
+* Part 3 - Algorithmic Optimizations
+* [Part 4 - Code Optimizations](/post/the-buddhabrot-part-4)
+* [Part 5 - The Big Reveal](/post/the-buddhabrot-part-5)
+
 ## Algorithmic Optimizations
 
 > The real problem is that programmers have spent far too much time worrying about efficiency in the wrong places and at the wrong times; **premature optimization is the root of all evil** (or at least most of it) in programming.
@@ -71,7 +79,7 @@ In our first optimization, we were able to filter out _some_ of the points insid
 
 Perhaps unsurprisingly, they will eventually get caught in an infinite loop, generating the same points over and over again.
 
-#### Cycle Detection
+### Cycle Detection
 
 To catch points like that we can use a cycle detection algorithm like [Brent's algorithm](https://en.wikipedia.org/wiki/Cycle_detection#Brent.27s_algorithm).  Essentially, it periodically checks the current _z_ value against an older version to see if we're revisiting older points.
 

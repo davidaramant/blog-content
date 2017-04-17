@@ -6,7 +6,15 @@ tags: ["Work related","Buddhabrot"]
 description: "Let's find out what exactly the Buddhabrot is"
 ---
 
-In the [last part](/post/the-buddhabrot-part-2) we learned what the Mandelbrot set is.
+In the [last part](/post/the-buddhabrot-part-1) we learned what the Mandelbrot set is.
+
+## Series Overview
+
+* [Part 1 - What is the Mandelbrot set?](/post/the-buddhabrot-part-1)
+* Part 2 - What is the Buddhabrot?
+* [Part 3 - Algorithmic Optimizations](/post/the-buddhabrot-part-3)
+* [Part 4 - Code Optimizations](/post/the-buddhabrot-part-4)
+* [Part 5 - The Big Reveal](/post/the-buddhabrot-part-5)
 
 ## Visualizing the Mandelbrot Set
 

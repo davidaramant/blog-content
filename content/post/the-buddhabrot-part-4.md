@@ -10,7 +10,15 @@ description: "Now that we've cut down on the work we have to do, let's optimize 
 
 OK - we've [drastically reduced the amount of work we have to do](/post/the-buddhabrot-part-3), so now let's try to optimize what's left as much as possible.
 
-#### A note on benchmarks...
+## Series Overview
+
+* [Part 1 - What is the Mandelbrot set?](/post/the-buddhabrot-part-1)
+* [Part 2 - What is the Buddhabrot?](/post/the-buddhabrot-part-2)
+* [Part 3 - Algorithmic Optimizations](/post/the-buddhabrot-part-3)
+* Part 4 - Code Optimizations
+* [Part 5 - The Big Reveal](/post/the-buddhabrot-part-5)
+
+### A note on benchmarks...
 
 Benchmarks are _hard_.
 
@@ -23,16 +31,6 @@ Benchmarks in .NET are even harder - you've got the just-in-time compiler, the g
 ![BenchmarkDotNet logo](/buddhabrot/benchmarkdotnet_logo.png)
 
 Even with tools like this, it can be pretty challenging coming up with realistic scenarios.  When I dusted off my fractal code to prepare for my talk, some of the improved benchmarks I wrote didn't remotely match what I had done just a year earlier (I think my earlier attempts were far too artificial).  I can only say that the results I'm presenting are what I saw on my machine with my code.  Your results may vary.
-
-### Is Brent's Algorithm worth it?
-
-Remember this thing?  Let's actually measure the impact of using a cycle detection algorithm when finding Buddhabrot points:
-
-![Brent's Algorithm Benchmark](/buddhabrot/brents_algorithm_benchmark.png)
-
-Welp.
-
-To be fair, cycle detection is probably useful for other Mandelbrot scenarios, but in our case it's kind of a dud.
 
 ## Break up processing
 
@@ -102,6 +100,16 @@ GPUs would be super-swell at finding points (churning through highly parallel da
 
 GPUs computing is something that I want explore but I just haven't found the time for it yet.
 
+### Is Brent's Algorithm worth it?
+
+Remember this thing?  Let's actually measure the impact of using a cycle detection algorithm when finding Buddhabrot points:
+
+![Brent's Algorithm Benchmark](/buddhabrot/brents_algorithm_benchmark.png)
+
+Welp.
+
+To be fair, cycle detection is probably useful for other Mandelbrot scenarios, but in our case it's kind of a dud.
+
 ## Stage 3 - Plotting the points
 
 Once we have a bunch of points, we need to plot their trajectories to generate the density map.
@@ -122,11 +130,7 @@ The above image shows the grid concept.  The full size version used 1024 x 1024 
 
 ## Stage 4 - Generating the Image
 
-Generating a single huge image file is only feasible up to a couple of hundred megapixels.  We had already hit some kind of Windows limit with the first 500 megapixel version so a better solution was needed.
-
-After exploring different deep-zoom options, the one that made the most sense to me was to use a web mapping library.  Satellite views on things like Google Maps are the exact same concept as showing a large Buddhabrot rendering - a massive amount of image data that can be displayed at different zoom levels, where only the visible portion is loaded.
-
-Before that, though, we need some way of turning the trajectory map (which is just a bunch of numbers) into colors.
+Before we get into more details about how to display the output, we first need some way of turning the trajectory map (which is just a bunch of numbers) into colors.
 
 ### Fit the data!
 
@@ -164,9 +168,13 @@ Picking the colors you want is ultimately subjective, but you might run into iss
 
 ![Color gradients](/buddhabrot/color_gradients.png)
 
-### Generating the Tiles / Zoom Levels
+### Displaying the Output
 
-I used a framework called [Leaflet](http://leafletjs.com/) to display the final result images.  Each of the 256 x 256 regions from the trajectory map was converted to a tile image.  Those tiles represent the deepest zoom level of the Buddhabrot.  Map frameworks like Leaflet load different sets of images for the different zoom levels - 4 tiles would be represented by 1 when zoomed out a level.
+Generating a single huge image file is only feasible up to a couple of hundred megapixels.  We had already hit some kind of Windows limit with the first 500 megapixel version so a better solution was needed.
+
+After exploring different deep-zoom options, the one that made the most sense to me was to use a web mapping library.  Satellite views on things like Google Maps are the exact same concept as showing a large Buddhabrot rendering - a massive amount of image data that can be displayed at different zoom levels, where only the visible portion is loaded.
+
+I used a framework called [Leaflet](http://leafletjs.com/) to display the final result images.  Each of the 256 x 256 regions from the trajectory map was converted to a tile image.  Those tiles represent the deepest zoom level of the Buddhabrot.  Map frameworks like Leaflet load different sets of images for the different zoom levels.  4 tiles would be represented by 1 when zoomed out a level.
 
 ![Zoom levels](/buddhabrot/zoom_levels.png)
 
@@ -174,7 +182,7 @@ To create the other zoom levels, I used [ImageMagick](http://www.imagemagick.org
 
 Originally I used PNG files as the output since it's lossless, but the size was pretty unwieldy - around 45GB for all the tiles.  I found that JPEGs at 80% quality setting looked almost indistinguishable but with a much more palatable final size of under 16GB (and that's without Google's new [Guetzli encoder](https://research.googleblog.com/2017/03/announcing-guetzli-new-open-source-jpeg.html)).
 
-#### Image Mechanics - Beware of `System.Drawing.Bitmap.SetPixel`
+### Image Mechanics - Beware of `System.Drawing.Bitmap.SetPixel`
 
 The standard bitmap class in .NET only has one obvious way of setting colors: `SetPixel`.  Unfortunately, `SetPixel` is _brutally_ slow.  The better way to do things is to use `LockBits`/`UnlockBits` and to directly manipulate the pixel buffer inside of the image.  I'm not sure why they haven't added a nicer convenience method to allow you to set all the colors at once, but it is very much worth your while to do things the hard way:
 
