@@ -81,6 +81,8 @@ Let's unpack that:
 * We're going to take those trajectories and keep track of which pixels they visit.  For each point in a trajectory, we'll figure out the pixel location that it corresponds to and increment that location by 1.
 * The final image is a visualization of how often each pixel location was visited by a trajectory.  In the above image, brighter pixels were visited more often, while the black areas were totally skipped.
 
+I cheated in the above definition - the first step talks about "the points not in the Mandelbrot set" like that's something that's trivial to express.  What that actually means in practice is that we'll pick some random points inside of the circle, make sure that they're not in the set, and plot their trajectories.
+
 ### Why do we only plot the numbers that are _not_ in the Mandelbrot set?
 
 If you reverse it and only plot points _in_ the set, you'll wind up with the **Anti-Buddhabrot**:
@@ -140,7 +142,7 @@ In addition to the maximum / minimum iteration limits, another variable that is 
 
 ![Noisy Buddhabrot](/buddhabrot/noisy_buddhabrot.png)
 
-Remember that we're visualizing a density map of how many times each pixel location has been visited.  If we don't plot enough points, our map will be extremely noisy like the above image.
+Remember that we're visualizing a density map of how many times each pixel location has been visited.  If we don't plot enough points, our map will be extremely noisy like the above image.  The above image might also be what happens if you try to simply iterate over every pixel location and plot the trajectory of the corresponding point.  We need _lots_ more points than that, which is why we have pick random starting points (and lots of them!).
 
 ## Summary - The Buddhabrot is Slow!
 
@@ -150,9 +152,9 @@ Let's wrap up this part by summarizing what we've learned so far:
 * The Buddhabrot needs a lot of points to not look noisy
 * Unlike the normal Mandelbrot visualization, there is not a 1:1 mapping between points and pixels
 
-A normal Mandelbrot visualization can be done in real-time (or close to it).  There are lots of fractal viewer programs you can download to play around with it.  One popular thing to do is to zoom in at incredible magnifications.  This is feasible because every pixel in the output corresponds to one complex number.  Making a rendering at 1x or 100,000,000x magnification is the same effort (minus any overhead from using an arbitrary-precision data type) - it's the same number of pixels, so it's the same number of complex numbers to iterate.
+A normal Mandelbrot visualization can be done in real-time (or close to it).  There are lots of fractal viewer programs you can download to play around with it.  One popular thing to do is to zoom in at incredible magnifications, which is feasible because every pixel in the output corresponds to one complex number.  Making a rendering at 1x or 100,000,000x magnification is the same effort (minus any overhead from using an arbitrary-precision data type) - it's the same number of pixels, so it's the same number of complex numbers to iterate.
 
-Not so for the Buddhabrot.  Because we don't know which starting points will contribute to a particular pixel location, zooming in real-time is not feasible.  You _can_ estimate which points you should iterate to get an image using technique like the Metropolis-Hastings algorithm, but that's pretty advanced.  It's actually much conceptually simpler to pre-render a gigantic version of it and zoom in after-the-fact.
+Not so for the Buddhabrot.  Because we don't know which starting points will contribute to a particular pixel location, zooming in real-time is not feasible.  You _can_ estimate which points you should iterate to get an image using technique like the Metropolis-Hastings algorithm, but that's a pretty advanced topic that I haven't delved into much.  It's actually much conceptually simpler to pre-render a gigantic version of it and zoom in after-the-fact.  Since we don't know (yet!) where the points are that contribute to a particular pixel, we pick the starting points at random from inside the circle.
 
 My particular version has the following stats:
 

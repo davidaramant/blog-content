@@ -32,7 +32,7 @@ I stated that using higher minimum/maximum iteration limits made the Buddhabrot 
 
 ![Raindrop shape in Buddhabrot](/buddhabrot/raindrop.jpg)
 
-These odd raindrop-shaped objects and the other "swirly" feature you'll see aren't really visible if you pick lower bounds.  I _think_ we are seeing the points swirl around in circles a while before they escape, although I haven't investigated this further.
+These odd raindrop-shaped objects and the other "swirly" features you'll see aren't really visible if you pick lower bounds.  I _think_ we are seeing the points swirl around in circles a while before they escape, although I haven't investigated this further.
 
 ### Asymmetry
 
@@ -40,7 +40,7 @@ Remember how I intentionally didn't mirror the output, despite the Mandelbrot se
 
 ![Closeup of the middle of the Buddhabrot](/buddhabrot/unsymmetrical.jpg)
 
-You can see that it's not quite the same on both sides.
+You can see that it's not quite the same on both sides since we're ultimately picking random points to plot.  If we somehow managed to plot an infinite number of points it _would_ look perfectly symmetrical, however.  There's actually a bit of a subjective decision of how many points you should plot.
 
 Also, philosophically I don't like the idea of mirroring it.  If I'm going through the trouble of generating gigabytes of images I want them to at least be different!
 

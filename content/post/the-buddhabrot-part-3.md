@@ -32,7 +32,7 @@ Let's take a look at the Mandelbrot set again:
 
 ![Mandelbrot Set](/buddhabrot/complex_plane_mandelbrot.png)
 
-Since we only care about points that _aren't_ in the set and our maximum iteration count is pretty high (5 million), picking a point that's inside the set is obviously very expensive.  Remember, those points will never leave the circle even under infinite iteration, so we will always loop for our maximum number before we have to throw away all that work.
+We're starting by picking random points inside the circle.  Since we only care about points that _aren't_ in the set and our maximum iteration count is pretty high (5 million), picking a point that's inside the set is obviously very expensive.  Remember, those points will never leave the circle even under infinite iteration, so we will always loop for our maximum number before we have to throw away all that work.
 
 Is there some faster way to tell whether a point is in the set?
 
@@ -95,7 +95,7 @@ Let's take a look at a plain rendering of the set again:
 
 Can you think of an optimization we haven't talked about?  Hint: it would make things twice as fast...
 
-If you guessed something involving _symmetry_ you are correct.  The Mandelbrot set is perfectly symmetrical across the real axis.  For the purpose of the Buddhabrot, we _could_ mirror everything we did and thereby find points twice as fast, at the cost of making it mirrored.  We'll revisit this when I talk about the final rendering, but this is one optimization I intentionally skipped.
+If you guessed something involving _symmetry_ you are correct.  The Mandelbrot set is perfectly symmetrical across the real axis.  For the purpose of the Buddhabrot, we _could_ mirror the trajectories we plot and thereby make everything twice as fast.  However, since we're picking random starting points, you lose a bit of visual interest by making the Buddhabrot symmetrical.  We'll revisit this when I talk about the final rendering, but this is one optimization I intentionally skipped.
 
 ## Summary
 
