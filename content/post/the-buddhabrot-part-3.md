@@ -60,7 +60,7 @@ From this, we can see that the escape time increases as you move closer and clos
 
 ![Mandelbrot Set with border regions highlighted](/buddhabrot/mandelbrot_edge_areas.png)
 
-By find the border areas we can _dramatically_ increase the chances that we pick a point that will match our criteria.  Instead of picking a random starting point from the comparatively giant gray circle, we can now limit ourselves to only those areas highlighted in red above.  This is _by far_ the most important optimization we can do.
+By finding the border areas we can _dramatically_ increase the chances that we pick a point that will match our criteria.  Instead of picking a random starting point from the comparatively giant gray circle, we can now limit ourselves to only those areas highlighted in red above.  This is _by far_ the most important optimization we can do.
 
 There's multiple ways of find the border regions, but the algorithm I used isn't particularly complex:
 

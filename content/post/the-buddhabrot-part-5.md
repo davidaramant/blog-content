@@ -40,7 +40,7 @@ Remember how I intentionally didn't mirror the output, despite the Mandelbrot se
 
 ![Closeup of the middle of the Buddhabrot](/buddhabrot/unsymmetrical.jpg)
 
-You can see that it's not quite the same on both sides since we're ultimately picking random points to plot.  If we somehow managed to plot an infinite number of points it _would_ look perfectly symmetrical, however.  There's actually a bit of a subjective decision of how many points you should plot.
+You can see that it's not quite the same on both sides since we're ultimately picking random points to plot.  If we somehow managed to plot an infinite number of points it _would_ look perfectly symmetrical, however.  How many points you should plot is ultimately a subjective decision.
 
 Also, philosophically I don't like the idea of mirroring it.  If I'm going through the trouble of generating gigabytes of images I want them to at least be different!
 
@@ -78,7 +78,7 @@ I'm not sure there really _is_ more detail to show around this area, but it stil
 
 ## The Code
 
-All the code for this [can be found on GitHub](https://github.com/davidaramant/Fractals) if you're curious.  I feel like I need a disclaimer here, however...  At some point I got pretty sloppy with it (tons of hardcoded things, etc) because the code is really just a means to an end, not the end result.  After coming back to it a year later I definitely I felt the pain from that because I couldn't find anything.  Just the perils of a mostly solo hobby project, I guess.
+All the code for this [can be found on GitHub](https://github.com/davidaramant/Fractals) if you're curious.  I feel like I need a disclaimer here, however...  At some point I got pretty sloppy with it (tons of hardcoded things, etc) because the code is really just a means to an end, not the end result.  After coming back to it a year later I felt the pain from that because I couldn't find anything and didn't remember how to run any of the steps.  Just the perils of a mostly solo hobby project, I guess.
 
 ## What's Next?
 
@@ -88,7 +88,7 @@ Am I done with the Buddhabrot?  A year ago, I would have said "probably."  Howev
 * By applying some **tone mapping** concepts there might be a way to bring out more detail in the output.
 * Everyone always, _always_ asks me if I'm going to make a bigger one.  A terapixel is a nice round number but you _really_ start getting into some headaches:
   * A terapixel version would have around _16 times_ the image data for... two more zoom levels?  Hosting 16GB of JPEGs is one thing; 256GB is quite another.
-  * The time involved goes up substantially too.  For example, the [Google Guetzli](https://github.com/google/guetzli/) JPEG encoder can drastically reduce the size of images.  However, they warn that it takes around 1 minute of CPU time for 1 megapixel.  OK, so 1 terapixel of images would take... over 2 years?  And, whoops, it's not just 1 terapixel because that's only the _deepest zoom level_ - if you count all the images for the other zoom levels it's over 1.3 terapixels of images.
+  * The time involved goes up substantially too.  For example, the [Google Guetzli](https://github.com/google/guetzli/) JPEG encoder can drastically reduce the size of images.  However, they warn that it takes around 1 minute of CPU time for 1 megapixel.  OK, so 1 terapixel of images would take... 2 years?  And, whoops, it's not just 1 terapixel because that's only the _deepest zoom level_ - if you count all the images for the other zoom levels it's over 1.3 terapixels of images.
 
 We'll see what/if I decide to do...
 

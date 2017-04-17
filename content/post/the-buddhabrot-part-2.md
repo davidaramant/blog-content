@@ -142,7 +142,7 @@ In addition to the maximum / minimum iteration limits, another variable that is 
 
 ![Noisy Buddhabrot](/buddhabrot/noisy_buddhabrot.png)
 
-Remember that we're visualizing a density map of how many times each pixel location has been visited.  If we don't plot enough points, our map will be extremely noisy like the above image.  The above image might also be what happens if you try to simply iterate over every pixel location and plot the trajectory of the corresponding point.  We need _lots_ more points than that, which is why we have pick random starting points (and lots of them!).
+Remember that we're visualizing a density map of how many times each pixel location has been visited.  If we don't plot enough points, our map will be extremely noisy like the above image.  The above image might also be what happens if you try to simply iterate over every pixel location and plot the trajectory of the corresponding point.  We need _a lot_ more points than that, which is why we have pick random starting points (you _can_ estimate which points you should iterate to get an image using a technique like the Metropolis-Hastings algorithm, but that's a pretty advanced topic that I haven't delved into much).
 
 ## Summary - The Buddhabrot is Slow!
 
@@ -154,7 +154,7 @@ Let's wrap up this part by summarizing what we've learned so far:
 
 A normal Mandelbrot visualization can be done in real-time (or close to it).  There are lots of fractal viewer programs you can download to play around with it.  One popular thing to do is to zoom in at incredible magnifications, which is feasible because every pixel in the output corresponds to one complex number.  Making a rendering at 1x or 100,000,000x magnification is the same effort (minus any overhead from using an arbitrary-precision data type) - it's the same number of pixels, so it's the same number of complex numbers to iterate.
 
-Not so for the Buddhabrot.  Because we don't know which starting points will contribute to a particular pixel location, zooming in real-time is not feasible.  You _can_ estimate which points you should iterate to get an image using technique like the Metropolis-Hastings algorithm, but that's a pretty advanced topic that I haven't delved into much.  It's actually much conceptually simpler to pre-render a gigantic version of it and zoom in after-the-fact.  Since we don't know (yet!) where the points are that contribute to a particular pixel, we pick the starting points at random from inside the circle.
+Not so for the Buddhabrot.  Because we don't know which starting points will contribute to a particular pixel location, zooming in real-time is not feasible.  It's actually much conceptually simpler to pre-render a gigantic version of it and zoom in after-the-fact.  Since we don't know (yet!) where the points are that contribute to a particular pixel, we pick the starting points at random from inside the circle.
 
 My particular version has the following stats:
 
