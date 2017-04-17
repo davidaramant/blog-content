@@ -6,7 +6,7 @@ tags: ["Work related","Buddhabrot"]
 description: "Finally, the 68.7 gigapixel Buddhabrot is unveiled!  I also have some thoughts on where to go from here"
 ---
 
-I think it's high time the big version is shown off...
+I think it's high time to show off the big version...
 
 ## Series Overview
 
