@@ -6,7 +6,7 @@ tags: ["Buddhabrot"]
 description: "It turns out I screwed up my earlier implementation"
 ---
 
-In my earlier series about the Buddhabrot I vilely slandered Brent's Cycle Detection Algorithm as ["kind of a dud."](/post/the-buddhabrot-part-4)  Well, I'm 99% sure I implemented it wrong the first time I tried it out (oops) so I think it's time to give it a fairer shot.
+In my earlier series about the Buddhabrot I vilely slandered Brent's Cycle Detection Algorithm as ["kind of a dud."](/post/the-buddhabrot-part-4#is-brent-s-algorithm-worth-it)  Well, I'm 99% sure I implemented it wrong the first time I tried it out (oops) so I think it's time to give it a fairer shot.
 
 I came across the concept of an _automatic iteration limit_ algorithm for finding out whether a point is inside the [Mandelbrot set](/post/the-buddhabrot-part-1).  In this method, there isn't an explicit maximum iteration count passed in - it will only stop iterating if the point escapes or it detects a cycle.  The cycle detection algorithm better work in this case!
 

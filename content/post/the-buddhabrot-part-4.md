@@ -110,6 +110,8 @@ Welp.
 
 To be fair, cycle detection is probably useful for other Mandelbrot scenarios, but in our case it's kind of a dud.
 
+**Addendum 2017-05-16:**  I'm pretty sure I didn't implement Brent's Algorithm correctly.  See my [follow-up post](/post/brents-cycle-detection-algorithm) for details.
+
 ## Stage 3 - Plotting the points
 
 Once we have a bunch of points, we need to plot their trajectories to generate the density map.
