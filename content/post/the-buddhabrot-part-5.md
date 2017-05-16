@@ -2,7 +2,7 @@
 title: "The Buddhabrot Part 5: The Big Reveal"
 draft: false
 date: 2017-04-12
-tags: ["Work related","Buddhabrot"]
+tags: ["Buddhabrot"]
 description: "Finally, the 68.7 gigapixel Buddhabrot is unveiled!  I also have some thoughts on where to go from here"
 ---
 

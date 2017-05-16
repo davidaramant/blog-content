@@ -2,7 +2,7 @@
 title: "The Buddhabrot Part 4: Code Optimizations"
 draft: false
 date: 2017-04-11
-tags: ["Work related","Buddhabrot"]
+tags: ["Buddhabrot"]
 description: "Now that we've cut down on the work we have to do, let's optimize what's left as much as possible"
 ---
 

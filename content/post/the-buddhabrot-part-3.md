@@ -2,7 +2,7 @@
 title: "The Buddhabrot Part 3: Algorithmic Optimizations"
 draft: false
 date: 2017-04-10
-tags: ["Work related","Buddhabrot"]
+tags: ["Buddhabrot"]
 description: "Creating the Buddhabrot takes a lot of work.  Let's reduce it as much as possible"
 ---
 

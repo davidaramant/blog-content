@@ -2,7 +2,7 @@
 title: "The Buddhabrot Part 2: What is the Buddhabrot?"
 draft: false
 date: 2017-04-07
-tags: ["Work related","Buddhabrot"]
+tags: ["Buddhabrot"]
 description: "Let's find out what exactly the Buddhabrot is"
 ---
 

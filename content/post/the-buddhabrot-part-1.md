@@ -2,7 +2,7 @@
 title: "The Buddhabrot Part 1: What is the Mandelbrot set?"
 draft: false
 date: 2017-04-06
-tags: ["Work related","Buddhabrot"]
+tags: ["Buddhabrot"]
 description: "I recently gave a talk about rendering a 68.7 gigapixel version of the Buddhabrot.  Let's explore what that means"
 ---
 
