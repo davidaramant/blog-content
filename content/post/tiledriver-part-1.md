@@ -12,13 +12,15 @@ Were these levels good?  No.  No, they were not.  We had to take a lot of shortc
 
 ## Wolfenstein 3D
 
+![Wolfenstein 3D title screen](/tiledriver/wolf3d-title.png)
+
 Wolfenstein 3D, the hottest game of 1992!  Wolf 3D tells the heart-warming and completely historically accurate tale of how a single allied prisoner of war single-handedly shot a billion Nazis and eventually took down Mecha-Hitler.
 
-WOLF 3D COLLAGE
+![Wolfenstein 3D gameplay collage](/tiledriver/wolf3d-gameplay-collage.png)
 
 Wolf 3D has an extremely simple level format.  Conceptually each map is a 64x64 grid with each space consiting of a wall, empty space, enemy, decoration, etc.  There is no height variation what-so-ever.  
 
-LEVEL OVERVIEW PICTURE
+![Wolfenstein 3D example map overview](/tiledriver/wolf3d-map-overview.png)
 
 The game seemed like an ideal starting point for exploring procedural level generation since the format is so simple.  With a game like Quake or even Doom, the level format itself has a lot of rules for what determines a valid map, whereas with Wolf 3D almost any combinations of blocks is a level (whether or not you can _play_ it is a different matter).
 
@@ -26,9 +28,9 @@ The game seemed like an ideal starting point for exploring procedural level gene
 
 Wolfenstein 3D, as released in 1992, was a completely self-contained game.  There was no mechanism built into it for loading user-created content: you bought the game, that was it.  However, fans quickly managed to reverse engineer various formats and were soon able to hack their own levels into the game.  Once the source code for the game engine was released in 1995 it really opened the flood gate of possibilities for user-made content.
 
-ENGINE OPEN-SOURCE PICTURE
+![Wolf 3D Open Source Overview](/tiledriver/wolf3d-open-source-overview.png)
 
-The ultimate result of this is the [ECWolf](http://maniacsvault.net/ecwolf/) project.  In additon to quality of life improvements like running on modern operating systems and supporting higher resolutions, a key focus of ECWolf is making everything as data-driven as possible.  The most relevant aspect of this for my purposes is UWMF - the Unified Wolfenstein Mapping Format.  Instead of having to deal with maps created in a quarter-century old binary format, maps can now be defined in a modern text-based format.  UWMF also removes some of the arcane limitations of the older format; for example, maps are no longer required to be exactly 64x64 in size - smaller or larger (within reason) levels can just as easily be created.
+The ultimate result of this is the [ECWolf](http://maniacsvault.net/ecwolf/) project.  In additon to quality of life improvements like running on modern operating systems and supporting higher resolutions, a key focus of ECWolf is making everything as data-driven as possible.  The most relevant aspect of this for my purposes is [UWMF](http://maniacsvault.net/ecwolf/wiki/Universal_Wolfenstein_Map_Format) - the Unified Wolfenstein Mapping Format.  Instead of having to deal with maps created in a quarter-century old binary format, maps can now be defined in a modern text-based format.  UWMF also removes some of the arcane limitations of the older format; for example, maps are no longer required to be exactly 64x64 in size - smaller or larger (within reason) levels can just as easily be created.
 
 Unfortunately, Wolf 3D is not nearly as popular as its younger brother Doom, and the editing scene has been somewhat slow to embrace ECWolf.  There _are_ a few mapping tools in semi-active development for Wolf 3D, but none of them support UWMF yet.  So, I had to support this format from scratch.
 
