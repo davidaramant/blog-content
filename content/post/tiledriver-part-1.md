@@ -20,7 +20,7 @@ Wolfenstein 3D, the hottest game of 1992!  Wolf 3D tells the heart-warming and c
 
 ![Wolfenstein 3D gameplay collage](/tiledriver/wolf3d-gameplay-collage.png)
 
-Wolf 3D has an extremely simple level format.  Conceptually each map is a 64x64 grid with each space consiting of a wall, empty space, enemy, decoration, etc.  There is no height variation whatsoever.  
+Wolf 3D has an extremely simple level format.  Conceptually each map is a 64x64 grid with each space consisting of a wall, empty space, enemy, decoration, etc.  There is no height variation whatsoever.  
 
 ![Wolfenstein 3D example map overview](/tiledriver/wolf3d-map-overview.png)
 
@@ -32,7 +32,7 @@ Wolfenstein 3D, as released in 1992, was a completely self-contained game.  Ther
 
 ![Wolf 3D Open Source Overview](/tiledriver/wolf3d-open-source-overview.png)
 
-The ultimate result of this is the [ECWolf](http://maniacsvault.net/ecwolf/) project.  In additon to quality of life improvements like running on modern operating systems and supporting higher resolutions, a key focus of ECWolf is making everything as data-driven as possible.  The most relevant aspect of this for my purposes is [UWMF](http://maniacsvault.net/ecwolf/wiki/Universal_Wolfenstein_Map_Format) - the Unified Wolfenstein Mapping Format.  Maps can now be defined in a flexible text-based format instead of having to deal with a quarter-century old binary format.  UWMF also removes some of the arcane limitations of the older format; for example, maps are no longer required to be exactly 64x64 in size - smaller or larger (within reason) levels can just as easily be created.
+The ultimate result of this is the [ECWolf](http://maniacsvault.net/ecwolf/) project.  In addition to quality of life improvements like running on modern operating systems and supporting higher resolutions, a key focus of ECWolf is making everything as data-driven as possible.  The most relevant aspect of this for my purposes is [UWMF](http://maniacsvault.net/ecwolf/wiki/Universal_Wolfenstein_Map_Format) - the Unified Wolfenstein Mapping Format.  Maps can now be defined in a flexible text based format instead of having to deal with a quarter-century old binary format.  UWMF also removes some of the arcane limitations of the older format; for example, maps are no longer required to be exactly 64x64 in size - smaller or larger (within reason) levels can just as easily be created.
 
 Unfortunately, Wolf 3D is not nearly as popular as its younger brother Doom, and the editing scene has been somewhat slow to embrace ECWolf.  There _are_ a few mapping tools in semi-active development for Wolf 3D, but none of them support UWMF yet.  So, I had to support this format from scratch.
 
@@ -44,7 +44,76 @@ Procedurally generating levels is a massive topic which I won't try to completel
 
 If you guessed "try to recursively add rectangles on all four sides," congratulations, you guessed right!  We did some trivial theming of the level, but overall, it's only capable of making incredibly samey, boxy levels with absolutely no overall sense of gameplay progression.
 
-### Making Caves with Cellular Automata
+### Let's Make a Cave
+
+There are lots of ways to procedurally create boxy man-made layouts, but what about something more organic?  How would you make a level of a cave?  
+
+It turns out we can use cellular automata to do this fairly easily.  Remember Conway's Game of Life?
+
+![Conway's Game of Life](/tiledriver/gameoflife.gif)
+<center>*Gosper's Glider Gun in Conway's Game of Life*</center>
+
+The concept of [cellular automata](https://en.wikipedia.org/wiki/Cellular_automaton) is pretty simple - you have a grid of cells that are either alive of dead (typically represented as black and white pixels).  There are rules defined that will cause cells to either die or spring to life in the next generation of the board depending on how many of its neighbors are living.  [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life) is merely a particular set of rules that are fairly well known.
+
+![Cell Neighborhoods](/tiledriver/cell-neighborhood.png)
+<center>*There are multiple types of cell neighborhoods*</center>
+
+### Using cellular automata
+
+So, how can we use this to make a cave?  Well, first of all, a Wolfenstein 3D map is also conveniently a big grid of tiles.  Let's start by saying that walls are "alive" and empty space is "dead" and generate a random board:
+
+![Generation 0 - Random Board](/tiledriver/ca-gen0.png)
+
+Lets use the following rules:
+
+* Rule 1
+* Rule 2
+
+Lets see what happens after a few generations of this!
+
+![Generation 2](/tiledriver/ca-gen2.png)
+<center>*Generation 2*</center>
+
+![Generation 3](/tiledriver/ca-gen3.png)
+<center>*Generation 3*</center>
+
+![Generation 4](/tiledriver/ca-gen4.png)
+<center>*Generation 4*</center>
+
+![Generation 5](/tiledriver/ca-gen5.png)
+<center>*Generation 5*</center>
+
+![Generation 6](/tiledriver/ca-gen6.png)
+<center>*Generation 6*</center>
+
+Now we're getting somewhere!
+
+### Making a Cave
+
+OK, the last one was pretty good, but what to do about all those unconnected cave spaces?  At first I thought there would be an easy way to connect all of them, but, unfortunately, this is one of those massively hard CS problems, so we'll cheat instead.
+
+First we'll find all the empty areas:
+
+![Colored Empty Spaces](/tiledriver/ca-colored.png)
+<center>*All of the empty spaces*</center>
+
+Next, we'll just... delete all but the largest one:
+
+![Largest Remaining Cave](/tiledriver/ca-large-cave.png)
+<center>*Hey, it's a cave!*</center>
+
+Now, there's a lot of trial and error in the above.  The percentage of live vs dead cells in the initial board, the number of generations, and that size of the board all play a large role.  We first used a standard Wolf 3D map size of 64x64, but quickly discovered it was too cramped to make interesting structures (as it turns out, a map tile in Wolf 3D is fairly coarse).
+
+But after adding a random player start and using some rock textures, he have a cave!
+
+![Boring Cave](/tiledriver/ca-boring-cave.png)
+<center>*An incredibly exhilarating cave*</center>
+
+### Making an *Exciting* Cave
+
+OK, so we have a really *boring* cave.  Lets make it more exciting...
+
+
 
 
 
