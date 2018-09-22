@@ -56,18 +56,20 @@ It turns out we can use cellular automata to do this fairly easily.  Remember Co
 The concept of [cellular automata](https://en.wikipedia.org/wiki/Cellular_automaton) is pretty simple - you have a grid of cells that are either alive of dead (typically represented as black and white pixels).  There are rules defined that will cause cells to either die or spring to life in the next generation of the board depending on how many of its neighbors are living.  [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life) is merely a particular set of rules that are fairly well known.
 
 ![Cell Neighborhoods](/tiledriver/cell-neighborhood.png)
-<center>*There are multiple types of cell neighborhoods*</center>
+<center>*Most cellular automata uses the Moore neighborhood*</center>
 
 ### Using cellular automata
 
 So, how can we use this to make a cave?  Well, first of all, a Wolfenstein 3D map is also conveniently a big grid of tiles.  Let's start by saying that walls are "alive" and empty space is "dead" and generate a random board:
 
-![Generation 0 - Random Board](/tiledriver/ca-gen0.png)
+![Generation 1 - Random Board](/tiledriver/ca-gen1.png)
+
+In the above picture the rock is black and the empty space is white.  Yes, there is a three-tile wide border of rock on the outside.  We'll come back to that, I promise.
 
 Lets use the following rules:
 
-* Rule 1
-* Rule 2
+* If a tile has less than 5 neighbors that are rock, it "dies" (becomes empty space)
+* If it *has* 5 or more rock neighbors, it becomes "alive" (rock)
 
 Lets see what happens after a few generations of this!
 
@@ -86,7 +88,15 @@ Lets see what happens after a few generations of this!
 ![Generation 6](/tiledriver/ca-gen6.png)
 <center>*Generation 6*</center>
 
+![Generation 7](/tiledriver/ca-gen7.png)
+<center>*Generation 7*</center>
+
 Now we're getting somewhere!
+
+As you can see, further generations end up smoothing out the roughness and forming a blobs of playable space.  Remember that three-tile border?  Without it, the empty area "grabs" the edges.  This doesn't work real well for our purpose since we want and enclosed area.
+
+![Generation 7](/tiledriver/ca-gen7-no-border.png)
+<center>*7 generations with no starting border*</center>
 
 ### Making a Cave
 
@@ -94,12 +104,12 @@ OK, the last one was pretty good, but what to do about all those unconnected cav
 
 First we'll find all the empty areas:
 
-![Colored Empty Spaces](/tiledriver/ca-colored.png)
+![Colored Empty Spaces](/tiledriver/ca-gen7-playable-spaces.png)
 <center>*All of the empty spaces*</center>
 
 Next, we'll just... delete all but the largest one:
 
-![Largest Remaining Cave](/tiledriver/ca-large-cave.png)
+![Largest Remaining Cave](/tiledriver/ca-gen7-only-largest-room.png)
 <center>*Hey, it's a cave!*</center>
 
 Now, there's a lot of trial and error in the above.  The percentage of live vs dead cells in the initial board, the number of generations, and that size of the board all play a large role.  We first used a standard Wolf 3D map size of 64x64, but quickly discovered it was too cramped to make interesting structures (as it turns out, a map tile in Wolf 3D is fairly coarse).
