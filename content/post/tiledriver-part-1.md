@@ -38,7 +38,7 @@ Unfortunately, Wolf 3D is not nearly as popular as its younger brother Doom, and
 
 ## Procedural Level Generation
 
-Procedurally generating levels is a massive topic which I won't try to completely cover here.   For a greater look at that fascinating subject I highly recommend the [Procedural Content Generation in Games](http://pcgbook.com/), a free online textbook.  After reading more about the theory, what we implemented in the first version of Tiledriver turned out to be a simplistic agent-based system.  Take a look at a map that it spit out to see if you can guess how it was made:
+Procedurally generating levels is a massive topic which I won't try to completely cover here.   For a greater look at that fascinating subject I highly recommend the free online textbook *[Procedural Content Generation in Games](http://pcgbook.com/)*.  After reading more about the theory, what we implemented in the first version of Tiledriver turned out to be a simplistic agent-based system.  Take a look at a map that it spit out to see if you can guess how it was made:
 
 ![Tiledriver 1 Map](/tiledriver/tiledriver-1-map.png)
 
@@ -100,7 +100,7 @@ As you can see, further generations end up smoothing out the roughness and formi
 
 ### Making a Cave
 
-OK, so we've managed to create some cave-y spaces, but what are we going to do about them not being connected?  At first I thought there would be an easy way to connect all of them, but, unfortunately, this is one of those massively hard CS problems, so we'll cheat instead.
+OK, so we've managed to create some cave-y spaces, but what are we going to do about them not being connected?  At first I thought there would be an easy way to connect all of them, but, unfortunately, this is one of those massively hard CS problems so we'll cheat instead.
 
 First we'll find all the empty areas, picking a different color to easily visualize each of them:
 
@@ -122,6 +122,49 @@ But after adding a random player start and using some rock textures, we have a c
 ### Making an *Exciting* Cave
 
 OK, so we have a really *boring* cave.  Lets make it more exciting...
+
+Lets add some random stalagmites & stalactites and some treasure in the nooks and crannies (finding nooks is pretty easy, just search for tile empty tile spots surrounded by a few walls):
+
+![Slightly More Interesting Cave](/tiledriver/ca-less-boring-cave.png)
+<center>*Well, there's stuff in it now...*</center>
+
+The main problem now is that the cave is incredibly... flat.  Since Wolf 3D has no lighting system whatsoever, everything kind of blurs together in a samey blob.
+
+But hey, we're using ECWolf where it's trivial to stuff like new textures, so lets cheat again!
+
+First, lets create a bunch of texture variations for different light levels using [Image Magick](https://www.imagemagick.org/script/index.php):
+
+![Wall Texture Light Variations](/tiledriver/wall-texture-variations.png)
+<center>*All the wall variations*</center>
+
+The above is all of the walls, but there's a similar set for the floor texture.  Next, we'll randomly place a scattering of light sources around the cave.
+
+Our simplistic fake lighting system will be as follows:
+
+* For each light source, try to shoot a ray out to each empty tile in a square surrounding the light (we'll use a square because it makes the loops easier).
+* If there's a wall in between the light and the destination tile, do nothing
+* If there's free line of sight, increment the light level for that tile based on how far away it is from the light
+
+Since we have 30 different textures, we have 30 light levels.  Based on the light level we have computed for the tile space, we just pick a different set of textures to represent it being brighter.  The higher brightness levels can only be achieved if multiple light sources interact.
+
+Turns out this looks pretty good!
+
+![Cave with Lights](/tiledriver/ca-lights.png)
+<center>*Let there be light!*</center>
+
+In cases were the geometry blocks the light, you get some comically jagged shadows:
+
+![Dramatic Shadows in Cave](/tiledriver/ca-dramatic-shadows.png)
+<center>*Incredibly realistic shadows!*</center>
+
+Of course, this lighting is 100% fake - it's just using different pre-defined textures.  The light doesn't change when you're playing the game and objects moving around (like an enemy solider) would not get brighter or darker depending on how close they are to a light.
+
+
+TODO:
+
+* Image for wall variations (https://www.imagemagick.org/Usage/montage/)
+* stuff
+
 
 
 
