@@ -98,11 +98,11 @@ Turns out this looks pretty good!
 ![Cave with Lights](/tiledriver/ca-lights.png)
 <center>*Let there be light!*</center>
 
-In cases were the geometry blocks the light, you get some endearingly jagged shadows:
+In cases where the geometry blocks the light, you get some endearingly jagged shadows:
 
 ![Dramatic Shadows in Cave](/tiledriver/ca-dramatic-shadows.png)
 <center>*Incredibly realistic shadows!*</center>
 
 Of course, this lighting is 100% fake - it's just using different pre-defined textures.  The light doesn't change when you're playing the game and objects moving around (like an enemy solider) would not get brighter or darker depending on how close they are to a light.
 
-TODO: Conclusion of some sort
+I've uploaded an [example map](/tiledriver/cave.pk3) if you want to see it running yourself.
